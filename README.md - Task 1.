@@ -1,0 +1,240 @@
+# Pharmacy Data Analytics – Task 1
+
+## Objective
+
+This project performs basic healthcare data quality and governance checks on a small synthetic, de-identified patient dataset.
+
+The task covers:
+
+1. Field classification and de-identification rationale
+2. Validation of ranges, data types, missing values, and duplicate Patient IDs
+3. Cleaning/standardization without inventing clinical values
+4. Documentation of the work in a public/view-only repository
+
+---
+
+## Dataset
+
+The dataset contains 10 synthetic patient records and 10 fields.
+
+No direct identifiers such as patient name, address, phone number, email address, or medical record number are present.
+
+---
+
+# 1. Field Classification
+
+| Field | Type | Classification | Reason |
+|---|---|---|---|
+| PatientID | Text | Pseudonymous identifier | Identifies a record using a synthetic code rather than a person's name |
+| Age | Integer | Clinical / quasi-identifier | Clinical/demographic information that could contribute to re-identification when combined with other data |
+| Gender | Categorical | Clinical/demographic | Descriptive demographic variable |
+| Diagnosis | Categorical | Clinical | Describes the patient's diagnosis |
+| PrimaryMedication | Categorical | Clinical | Medication associated with the record |
+| DosageMg | Numeric | Clinical | Medication dosage |
+| TreatmentDurationDays | Integer | Clinical | Duration of treatment in days |
+| Readmitted | Categorical | Clinical/outcome | Indicates whether the patient was readmitted |
+| BloodPressure | Text in systolic/diastolic format | Clinical | Blood-pressure measurement |
+| CholesterolLevel | Numeric | Clinical | Cholesterol measurement |
+
+## Data Dictionary
+
+| Field | Data type | Description | Classification |
+|---|---|---|---|
+| PatientID | String | Synthetic record identifier | Pseudonymous identifier |
+| Age | Integer | Patient age in years | Clinical/demographic |
+| Gender | String | Gender category in the sample | Demographic |
+| Diagnosis | String | Recorded diagnosis | Clinical |
+| PrimaryMedication | String | Primary medication listed | Clinical |
+| DosageMg | Numeric | Medication dose in mg | Clinical |
+| TreatmentDurationDays | Integer | Treatment duration in days | Clinical |
+| Readmitted | String | Whether record indicates readmission | Outcome/clinical |
+| BloodPressure | String | Systolic/diastolic blood pressure | Clinical |
+| CholesterolLevel | Integer | Cholesterol measurement | Clinical |
+
+### Why the sample is de-identified
+
+The dataset is presented as synthetic/de-identified training data. It does not contain direct personal identifiers such as names, addresses, phone numbers, emails, or dates of birth. Patient IDs use artificial codes (PAT-201 to PAT-210). Age and clinical variables remain because they are useful for analytics, but they should still be treated as potentially sensitive healthcare information.
+
+---
+
+# 2. Data Validation
+
+## Dataset Overview
+
+- Records: **10**
+- Fields: **10**
+- Missing cells: **0**
+- Duplicate Patient IDs: **0**
+
+## Missing Values
+
+- Total missing cells: **0**
+- No field in the supplied 10-row sample contains a blank/null value.
+
+### Validation Result
+
+**Pass – 0 missing cells**
+
+## Duplicate Patient IDs
+
+- Duplicate Patient IDs: **0**
+- All Patient IDs are unique.
+
+### Validation Result
+
+**Pass – 0 duplicates**
+
+## Data Types
+
+- PatientID, Gender, Diagnosis, PrimaryMedication, Readmitted and BloodPressure are categorical/text fields.
+- Age, DosageMg, TreatmentDurationDays and CholesterolLevel are numeric fields.
+- BloodPressure is stored as text because it contains two values separated by `/`.
+
+## Range Checks
+
+| Field | Observed range | Validation result |
+|---|---:|---|
+| Age | 29–76 years | No obvious invalid values |
+| DosageMg | 0.05–850 mg | No blank or non-numeric values |
+| TreatmentDurationDays | 14–365 days | No blank or non-numeric values |
+| CholesterolLevel | 175–260 | No blank or non-numeric values |
+| BloodPressure | 115/72–150/95 | All records follow systolic/diastolic format |
+
+These checks identify structural/range issues only. They do not establish whether an individual clinical value is medically appropriate.
+
+---
+
+# 3. Cleaning Rules Applied
+
+The following non-destructive cleaning/standardization rules were used:
+
+1. Confirmed that PatientID values are unique.
+2. Checked for missing values without replacing them with invented values.
+3. Confirmed numeric fields are represented as numeric values.
+4. Standardized categorical text to consistent capitalization/spelling.
+5. Preserved BloodPressure in its original systolic/diastolic representation rather than inventing separate values.
+6. Preserved all supplied clinical values because no evidence was available to justify changing them.
+7. Retained the synthetic PatientID format.
+
+Because the supplied sample already has consistent values and no missing/duplicate records, no clinical values required correction.
+
+---
+
+# 4. Data Quality Report
+
+## Dataset Overview
+
+| Metric | Result |
+|---|---:|
+| Records | 10 |
+| Fields | 10 |
+| Missing cells | 0 |
+| Duplicate Patient IDs | 0 |
+
+## Validation Results
+
+| Check | Result |
+|---|---|
+| Missing values | Pass – 0 missing cells |
+| Duplicate Patient IDs | Pass – 0 duplicates |
+| Age range observed | 29–76 |
+| Dosage range observed | 0.05–850.0 mg |
+| Treatment duration observed | 14–365 days |
+| Cholesterol observed | 175–260 |
+| BloodPressure format | Pass – consistent systolic/diastolic pattern |
+
+## Data Cleaning Decision
+
+No clinical values were invented, imputed, or medically "corrected". The sample was already structurally consistent, so cleaning was limited to documentation and standardization.
+
+## Governance Note
+
+A structurally valid value is not automatically clinically correct. Clinical appropriateness would require a clinical reference standard and additional context that are not supplied in this exercise.
+
+---
+
+# 5. Complete Healthcare Patient Dataset
+
+The following is the complete content of the original `healthcare_patients_sample.csv` file.
+
+```csv
+PatientID,Age,Gender,Diagnosis,PrimaryMedication,DosageMg,TreatmentDurationDays,Readmitted,BloodPressure,CholesterolLevel
+PAT-201,42,Male,Hypertension,Amlodipine,10.0,90,No,138/88,210
+PAT-202,58,Female,Type 2 Diabetes,Metformin,500.0,180,No,128/80,195
+PAT-203,67,Male,Heart Disease,Atorvastatin,40.0,120,Yes,145/92,245
+PAT-204,35,Female,Asthma,Albuterol,2.0,30,No,118/75,180
+PAT-205,71,Female,Osteoarthritis,Ibuprofen,400.0,60,Yes,132/84,205
+PAT-206,50,Male,Type 2 Diabetes,Metformin,850.0,90,No,125/82,215
+PAT-207,63,Female,Hypertension,Lisinopril,20.0,150,No,135/86,220
+PAT-208,29,Male,Allergic Rhinitis,Cetirizine,10.0,14,No,115/72,175
+PAT-209,76,Male,Heart Disease,Clopidogrel,75.0,365,Yes,150/95,260
+PAT-210,48,Female,Hypothyroidism,Levothyroxine,0.05,180,No,122/78,190
+````
+
+---
+
+# 6. Data Quality Summary
+
+The supplied sample contains 10 records and 10 fields. The sample has no missing cells and no duplicate Patient IDs. The numeric fields are suitable for basic validation, while BloodPressure is represented as a structured text field.
+
+No clinical values were imputed or changed solely because they might appear unusual. This follows the task requirement not to invent clinical data.
+
+---
+
+# 7. De-identification and Governance
+
+The dataset is synthetic/de-identified training data.
+
+It does not contain direct identifiers such as:
+
+* Names
+* Addresses
+* Phone numbers
+* Email addresses
+* Dates of birth
+* Medical record numbers
+
+Patient IDs use artificial codes from PAT-201 to PAT-210.
+
+Age and clinical variables remain because they are useful for analytics, but they should still be treated as potentially sensitive healthcare information.
+
+A structurally valid value is not automatically clinically correct. Clinical appropriateness would require a clinical reference standard and additional context that are not supplied in this exercise.
+
+---
+
+# 8. Repository File Information
+
+The original project consisted of four files:
+
+1. `README.md` – Project overview and documentation
+2. `data_dictionary.md` – Field-level documentation
+3. `data_quality_report.md` – Validation and data quality results
+4. `healthcare_patients_sample.csv` – Synthetic patient dataset
+
+All four contents have been merged above into this single GitHub-ready file.
+
+---
+
+# 9. Conclusion
+
+The sample is structurally clean for the checks performed:
+
+* There are **10 records**.
+* There are **10 fields**.
+* There are **0 missing cells**.
+* There are **0 duplicate Patient IDs**.
+* The fields follow consistent basic formats.
+* Numeric fields are suitable for basic validation.
+* BloodPressure is represented as a structured systolic/diastolic text field.
+
+No clinical values were invented, imputed, or changed solely because they might appear unusual.
+
+The dataset remains synthetic/de-identified and should be used for training/analytics purposes rather than real-patient decision making.
+
+## Overall Data Quality Status
+
+**PASS**
+
+The dataset passed the basic structural data quality checks performed in this task.
+
+```
