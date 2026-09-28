@@ -1,0 +1,474 @@
+# Pharmacy Performance Dashboard
+
+## Task: Pharmacy Performance Dashboard
+
+### Objective
+
+Analyze pharmacy sales trends, product mix, revenue contribution, and branded versus generic product performance using a decision-focused dashboard.
+
+This analysis uses the synthetic pharmacy sales dataset supplied with the assignment.
+
+---
+
+# 1. Dataset Overview
+
+The dataset contains pharmacy transaction-level sales information.
+
+### Fields available in the dataset
+
+| Field | Description |
+|---|---|
+| TransactionID | Unique transaction identifier |
+| Date | Transaction date |
+| DrugName | Name of the medicine/product |
+| Category | Product category |
+| UnitsSold | Number of units sold |
+| UnitPrice | Selling price per unit |
+| TotalRevenue | Revenue generated from the transaction |
+| StoreLocation | Location of the store |
+| GenericStatus | Branded or Generic |
+
+### Data validation
+
+The dataset was reviewed for the following fields:
+
+- Sales/revenue
+- Quantity/units sold
+- Product category
+- Date
+- Product name
+- Branded/generic status
+
+The supplied dataset contains valid-looking transaction records and numeric values for units sold, unit price and total revenue.
+
+### Important data limitation
+
+A **Cost** field is not present in the supplied dataset.
+
+Therefore, actual profit margin and gross margin cannot be calculated reliably from the available data.
+
+No cost values were assumed or fabricated.
+
+Similarly, a reliable time-based growth calculation requires usable dates covering multiple periods. The dates in the supplied screenshot are displayed as `########`, so period-over-period growth cannot be independently validated from the screenshot.
+
+---
+
+# 2. Transaction-Level Data Used
+
+| Transaction ID | Drug | Category | Units Sold | Unit Price | Total Revenue | Store Location | Status |
+|---|---|---|---:|---:|---:|---|---|
+| TXN-801 | Paracetamol | Analgesic | 150 | 15 | 2,250 | Mumbai North | Generic |
+| TXN-802 | Amoxicillin | Antibiotic | 45 | 85 | 3,825 | Delhi Central | Branded |
+| TXN-803 | Metformin | Antidiabetic | 120 | 25 | 3,000 | Bangalore | Generic |
+| TXN-804 | Atorvastatin | Cardiovascular | 80 | 110 | 8,800 | Mumbai North | Branded |
+| TXN-805 | Pantoprazole | Gastrointestinal | 95 | 45 | 4,275 | Hyderabad | Generic |
+| TXN-806 | Azithromycin | Antibiotic | 60 | 130 | 7,800 | Delhi Central | Branded |
+| TXN-807 | Cetirizine | Antihistamine | 200 | 12 | 2,400 | Bangalore | Generic |
+| TXN-808 | Amlodipine | Cardiovascular | 110 | 30 | 3,300 | Mumbai North | Generic |
+| TXN-809 | Ibuprofen | Analgesic | 130 | 22 | 2,860 | Hyderabad | Generic |
+| TXN-810 | Vitamin D3 | Supplement | 175 | 90 | 15,750 | Delhi Central | Branded |
+
+---
+
+# 3. Key Performance Indicators
+
+## Total Units Sold
+
+Total units sold:
+
+**1,165 units**
+
+## Total Revenue
+
+Total revenue:
+
+**54,260**
+
+## Average Revenue per Unit
+
+Formula:
+
+`Total Revenue / Total Units Sold`
+
+Calculation:
+
+`54,260 / 1,165 = 46.58`
+
+Therefore:
+
+**Average revenue per unit = 46.58**
+
+---
+
+# 4. Product Revenue Contribution
+
+Revenue contribution was calculated using:
+
+`Units Sold × Unit Price`
+
+| Drug | Units Sold | Revenue | Revenue Contribution |
+|---|---:|---:|---:|
+| Paracetamol | 150 | 2,250 | 4.15% |
+| Amoxicillin | 45 | 3,825 | 7.05% |
+| Metformin | 120 | 3,000 | 5.53% |
+| Atorvastatin | 80 | 8,800 | 16.22% |
+| Pantoprazole | 95 | 4,275 | 7.88% |
+| Azithromycin | 60 | 7,800 | 14.37% |
+| Cetirizine | 200 | 2,400 | 4.42% |
+| Amlodipine | 110 | 3,300 | 6.08% |
+| Ibuprofen | 130 | 2,860 | 5.27% |
+| Vitamin D3 | 175 | 15,750 | 29.03% |
+| **Total** | **1,165** | **54,260** | **100%** |
+
+---
+
+# 5. Product Performance Analysis
+
+The products with the largest revenue contributions are:
+
+### Vitamin D3
+
+- Units sold: 175
+- Revenue: 15,750
+- Revenue contribution: 29.03%
+
+Vitamin D3 contributes the largest share of total revenue in the supplied dataset.
+
+### Atorvastatin
+
+- Units sold: 80
+- Revenue: 8,800
+- Revenue contribution: 16.22%
+
+### Azithromycin
+
+- Units sold: 60
+- Revenue: 7,800
+- Revenue contribution: 14.37%
+
+These products should receive attention when reviewing product availability and inventory planning because stock-outs could have a comparatively larger effect on revenue.
+
+---
+
+# 6. Branded vs Generic Performance
+
+The dataset was divided into two groups:
+
+- Branded
+- Generic
+
+## Generic Products
+
+Generic products in the dataset:
+
+- Paracetamol
+- Metformin
+- Pantoprazole
+- Cetirizine
+- Amlodipine
+- Ibuprofen
+
+### Generic performance
+
+**Units sold:** 805
+
+**Revenue:** 18,085
+
+**Revenue contribution:** 33.33%
+
+---
+
+## Branded Products
+
+Branded products in the dataset:
+
+- Amoxicillin
+- Atorvastatin
+- Azithromycin
+- Vitamin D3
+
+### Branded performance
+
+**Units sold:** 360
+
+**Revenue:** 36,175
+
+**Revenue contribution:** 66.67%
+
+---
+
+# 7. Branded vs Generic Comparison
+
+| KPI | Branded | Generic |
+|---|---:|---:|
+| Number of products | 4 | 6 |
+| Units Sold | 360 | 805 |
+| Revenue | 36,175 | 18,085 |
+| Revenue Share | 66.67% | 33.33% |
+| Average Revenue per Unit | 100.49 | 22.47 |
+
+### Interpretation
+
+Generic products account for a larger number of units sold in the supplied dataset.
+
+However, branded products generate a larger share of total revenue because their average revenue per unit is substantially higher.
+
+This demonstrates that unit volume and revenue contribution provide different views of product performance.
+
+---
+
+# 8. Category-Level Revenue Analysis
+
+| Category | Revenue |
+|---|---:|
+| Supplement | 15,750 |
+| Cardiovascular | 12,100 |
+| Antibiotic | 11,625 |
+| Analgesic | 5,110 |
+| Gastrointestinal | 4,275 |
+| Antidiabetic | 3,000 |
+| Antihistamine | 2,400 |
+| **Total** | **54,260** |
+
+### Category observations
+
+The Supplement category generates the highest revenue in the supplied dataset, primarily because of the Vitamin D3 transaction.
+
+Cardiovascular products are the second-largest revenue contributor.
+
+Antibiotics also represent a substantial revenue category because of the Amoxicillin and Azithromycin transactions.
+
+---
+
+# 9. Inventory and Stock Priorities
+
+The dataset does not contain an actual stock-on-hand field.
+
+Therefore, inventory priority cannot be determined from current stock levels.
+
+However, revenue contribution and units sold can be used as preliminary indicators for which products may deserve monitoring.
+
+### Products that could be prioritized for monitoring
+
+1. Vitamin D3
+2. Atorvastatin
+3. Azithromycin
+4. Amlodipine
+5. Paracetamol
+6. Ibuprofen
+
+These products have meaningful revenue or unit-volume contribution in the supplied dataset.
+
+This should not be interpreted as a clinical recommendation or a definitive inventory order.
+
+Actual stock prioritization would require additional fields such as:
+
+- Current stock
+- Reorder level
+- Safety stock
+- Lead time
+- Expiry date
+- Supplier information
+- Historical demand
+- Stock-out frequency
+
+---
+
+# 10. Margin Analysis
+
+The assignment requests margin analysis.
+
+However, the supplied dataset does not provide a Cost field.
+
+Therefore:
+
+**Gross Profit cannot be calculated.**
+
+**Gross Margin % cannot be calculated.**
+
+The correct formulas would be:
+
+`Gross Profit = Revenue - Cost`
+
+`Gross Margin % = (Revenue - Cost) / Revenue × 100`
+
+Because cost data is unavailable, no estimated margin values have been created.
+
+This prevents unsupported financial assumptions from being introduced into the dashboard.
+
+---
+
+# 11. Growth Analysis
+
+The assignment also requests growth analysis.
+
+A valid growth calculation requires comparable time periods.
+
+The supplied screenshot displays the Date column as `########`, so the actual dates cannot be independently read from the provided image.
+
+Therefore, period-over-period growth is not calculated.
+
+The appropriate formula would be:
+
+`Growth % = (Current Period Revenue - Previous Period Revenue) / Previous Period Revenue × 100`
+
+Once the original CSV with readable dates is available, this KPI can be added to the dashboard.
+
+---
+
+# 12. Dashboard KPI Summary
+
+| KPI | Result |
+|---|---:|
+| Total Units Sold | 1,165 |
+| Total Revenue | 54,260 |
+| Average Revenue per Unit | 46.58 |
+| Branded Revenue | 36,175 |
+| Generic Revenue | 18,085 |
+| Branded Revenue Share | 66.67% |
+| Generic Revenue Share | 33.33% |
+| Highest Revenue Product | Vitamin D3 |
+| Highest Revenue Category | Supplement |
+| Margin | Not calculable – Cost unavailable |
+| Growth | Not calculated – Date values unavailable |
+
+---
+
+# 13. Decision-Focused Insights
+
+### Insight 1: Revenue is concentrated in a small number of products
+
+Vitamin D3, Atorvastatin and Azithromycin together generate a substantial portion of total revenue.
+
+These products should therefore be monitored closely for availability when actual inventory data becomes available.
+
+### Insight 2: Generic products have higher unit volume
+
+Generic products account for:
+
+**805 of 1,165 units sold**
+
+This represents approximately **69.10% of total units sold**.
+
+### Insight 3: Branded products generate higher revenue
+
+Branded products account for:
+
+**36,175 of 54,260 total revenue**
+
+or approximately **66.67% of revenue**.
+
+This occurs despite branded products representing fewer units sold.
+
+### Insight 4: Unit volume and revenue tell different stories
+
+Cetirizine has the highest unit volume at 200 units but generates only 2,400 in revenue.
+
+Vitamin D3 sells 175 units but generates 15,750 in revenue.
+
+Therefore, inventory and sales decisions should consider both volume and revenue contribution rather than relying on units sold alone.
+
+---
+
+# 14. Dashboard Design
+
+The recommended dashboard should contain the following sections:
+
+## KPI Cards
+
+- Total Revenue
+- Total Units Sold
+- Average Revenue per Unit
+- Branded Revenue Share
+- Generic Revenue Share
+
+## Charts
+
+### Chart 1: Revenue by Product
+
+Use a bar chart showing revenue for each drug.
+
+### Chart 2: Branded vs Generic Revenue
+
+Use a comparison chart showing:
+
+- Branded: 36,175
+- Generic: 18,085
+
+### Chart 3: Units Sold by Product
+
+Use a bar chart showing units sold for each product.
+
+### Chart 4: Revenue by Category
+
+Use a bar chart showing category-level revenue.
+
+---
+
+# 15. Recommended Dashboard Filters
+
+If the dashboard is created in Excel, Power BI, Tableau or another visualization platform, recommended filters are:
+
+- Date
+- Store Location
+- Category
+- Drug Name
+- Generic Status
+
+These filters allow the reviewer to explore the dataset interactively.
+
+---
+
+# 16. Data Limitations
+
+The following limitations should be displayed clearly in the dashboard/report:
+
+1. The supplied dataset does not contain product cost.
+2. Margin and profit therefore cannot be calculated.
+3. The provided screenshot does not expose readable date values.
+4. Period-over-period growth therefore cannot be independently calculated from the screenshot.
+5. Inventory stock-on-hand data is unavailable.
+6. Inventory priority observations are therefore based on sales/revenue contribution rather than actual stock levels.
+7. The dataset is synthetic and should not be interpreted as real-world pharmacy demand.
+
+---
+
+# 17. Conclusion
+
+The analysis of the supplied synthetic pharmacy sales dataset shows total sales of 1,165 units and total revenue of 54,260.
+
+Generic products account for the majority of unit volume, while branded products account for the majority of revenue.
+
+Vitamin D3 is the largest individual revenue contributor in the supplied transactions, followed by Atorvastatin and Azithromycin.
+
+The analysis also demonstrates the importance of including cost, inventory and readable date fields in future versions of the dataset. These fields would allow complete margin, growth and inventory-priority analysis.
+
+No unsupported cost, margin or growth figures have been assumed.
+
+---
+
+## Assignment Completion Checklist
+
+- [x] Validated sales-related fields
+- [x] Validated quantity/units sold
+- [x] Reviewed product categories
+- [x] Reviewed date field
+- [x] Calculated total revenue
+- [x] Calculated total units sold
+- [x] Calculated average revenue per unit
+- [x] Calculated product revenue contribution
+- [x] Compared branded and generic performance
+- [x] Identified revenue concentration
+- [x] Identified potential inventory monitoring priorities
+- [x] Documented missing cost data
+- [x] Documented inability to calculate margin
+- [x] Documented date limitation for growth analysis
+- [x] Proposed dashboard structure
+
+---
+
+## Data Source
+
+Synthetic pharmacy sales dataset supplied with the Pharmacy Performance Dashboard assignment.
+
+The dataset is intended for operational sales/dashboard analysis and does not represent real patient, clinical or medical outcomes.
