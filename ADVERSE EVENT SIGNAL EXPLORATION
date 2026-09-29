@@ -1,0 +1,716 @@
+# Adverse Event Signal Exploration
+
+## Pharmacovigilance / Healthcare Data Analytics Internship
+
+### Project Overview
+
+This project performs a descriptive exploration of de-identified adverse-event reports to identify reporting patterns and drug–event combinations that may warrant further expert review.
+
+The analysis focuses on:
+
+- Cleaning adverse-event data
+- Standardizing drug, reaction, severity, age-group and outcome fields
+- Calculating reporting frequencies
+- Reviewing severe and life-threatening reports
+- Reviewing hospitalization outcomes
+- Visualizing drug–event combinations
+- Identifying cases that may warrant expert review
+- Clearly distinguishing descriptive signal exploration from causal assessment
+
+> **Important:** This project is a descriptive, non-causal signal exploration. A frequent drug–event combination or a severe outcome does not establish that the drug caused the event.
+
+---
+
+# 1. Objective
+
+The objective of this project is to use cautious descriptive analysis to explore de-identified adverse-event reports and identify reporting patterns or potential signals that may require expert review.
+
+The analysis specifically evaluates:
+
+1. Drug and adverse-reaction reporting frequency
+2. Severity distribution
+3. Age-group distribution
+4. Outcome distribution
+5. Reporter-type distribution
+6. High-frequency drug–event combinations
+7. Severe and life-threatening reports
+8. Hospitalization outcomes
+9. Potential cases requiring further pharmacovigilance review
+
+---
+
+# 2. Dataset Description
+
+The supplied dataset contains 8 de-identified adverse-event reports.
+
+### Dataset fields
+
+| Field | Description |
+|---|---|
+| ReportID | Unique adverse-event report identifier |
+| PatientAge | Patient age in years |
+| PatientGender | Patient gender |
+| SuspectedDrug | Suspected medicinal product |
+| Indication | Indication/condition for which the drug was being used |
+| AdverseReaction | Reported adverse reaction |
+| AdverseReactionOnset | Reported onset value shown in the dataset |
+| Severity | Reported severity category |
+| Outcome | Outcome of the reported event |
+| ReporterType | Type of person reporting the event |
+
+---
+
+# 3. Data Cleaning and Standardization
+
+The supplied dataset was reviewed and standardized for analysis.
+
+## 3.1 Drug names
+
+Drug names were standardized to consistent names:
+
+- Amoxicillin
+- Atorvastatin
+- Ciprofloxacin
+- Ibuprofen
+- Lisinopril
+- Metformin
+- Warfarin
+- Paclitaxel
+
+## 3.2 Adverse reactions
+
+The adverse-reaction descriptions were standardized as follows:
+
+- Skin Rash
+- Severe Muscle Pain
+- Tendonitis
+- Gastric Ulcer
+- Persistent Cough
+- Nausea & Vomiting
+- Uncontrolled Bleeding
+- Peripheral Neuropathy
+
+## 3.3 Severity
+
+Severity categories were retained as represented in the source:
+
+- Mild
+- Moderate
+- Severe
+- Life-Threatening
+
+## 3.4 Outcome
+
+Outcome categories were standardized as:
+
+- Recovered
+- Recovering
+- Hospitalized
+- Not Recovered
+
+## 3.5 Age groups
+
+Age groups were derived from the patient ages for descriptive analysis:
+
+| Age Group | Definition |
+|---|---|
+| Pediatric | <18 years |
+| Young Adult | 18–44 years |
+| Middle Adult | 45–64 years |
+| Older Adult | ≥65 years |
+
+No pediatric cases were present in this dataset.
+
+---
+
+# 4. Cleaned Dataset
+
+| Report ID | Age | Gender | Age Group | Suspected Drug | Indication | Adverse Reaction | Onset | Severity | Outcome | Reporter Type |
+|---|---:|---|---|---|---|---|---:|---|---|---|
+| ADR-9001 | 45 | Female | Middle Adult | Amoxicillin | Bacterial Infection | Skin Rash | 2 | Mild | Recovered | Pharmacist |
+| ADR-9002 | 62 | Male | Middle Adult | Atorvastatin | Hyperlipidemia | Severe Muscle Pain | 14 | Moderate | Recovering | Physician |
+| ADR-9003 | 71 | Female | Older Adult | Ciprofloxacin | UTI | Tendonitis | 7 | Severe | Hospitalized | Physician |
+| ADR-9004 | 28 | Male | Young Adult | Ibuprofen | Headache | Gastric Ulcer | 5 | Severe | Hospitalized | Patient |
+| ADR-9005 | 53 | Female | Middle Adult | Lisinopril | Hypertension | Persistent Cough | 21 | Mild | Recovered | Pharmacist |
+| ADR-9006 | 39 | Male | Young Adult | Metformin | Diabetes | Nausea & Vomiting | 1 | Mild | Recovered | Patient |
+| ADR-9007 | 68 | Male | Older Adult | Warfarin | Atrial Fibrillation | Uncontrolled Bleeding | 10 | Life-Threatening | Hospitalized | Physician |
+| ADR-9008 | 50 | Female | Middle Adult | Paclitaxel | Chemotherapy | Peripheral Neuropathy | 30 | Moderate | Not Recovered | Oncologist |
+
+---
+
+# 5. Basic Dataset Summary
+
+### Total reports
+
+**8 reports**
+
+### Gender distribution
+
+| Gender | Reports | Percentage |
+|---|---:|---:|
+| Female | 4 | 50.0% |
+| Male | 4 | 50.0% |
+| **Total** | **8** | **100%** |
+
+### Age
+
+Patient ages range from:
+
+**28 to 71 years**
+
+Average age:
+
+**52 years**
+
+---
+
+# 6. Age-Group Analysis
+
+| Age Group | Number of Reports | Percentage |
+|---|---:|---:|
+| Pediatric (<18) | 0 | 0% |
+| Young Adult (18–44) | 2 | 25.0% |
+| Middle Adult (45–64) | 4 | 50.0% |
+| Older Adult (≥65) | 2 | 25.0% |
+| **Total** | **8** | **100%** |
+
+### Interpretation
+
+The largest age group in the supplied dataset is the **45–64 years** group, representing 4 of the 8 reports.
+
+Older adults account for 2 reports, while young adults account for 2 reports.
+
+Because the dataset contains only eight reports, these proportions should not be generalized to a wider patient population.
+
+---
+
+# 7. Drug Reporting Frequency
+
+The suspected-drug frequency was calculated by counting the number of reports associated with each drug.
+
+| Suspected Drug | Number of Reports | Percentage |
+|---|---:|---:|
+| Amoxicillin | 1 | 12.5% |
+| Atorvastatin | 1 | 12.5% |
+| Ciprofloxacin | 1 | 12.5% |
+| Ibuprofen | 1 | 12.5% |
+| Lisinopril | 1 | 12.5% |
+| Metformin | 1 | 12.5% |
+| Warfarin | 1 | 12.5% |
+| Paclitaxel | 1 | 12.5% |
+| **Total** | **8** | **100%** |
+
+### Interpretation
+
+Every suspected drug appears exactly once.
+
+Therefore, there is **no repeated suspected drug** that can be identified as a high-frequency drug from this dataset alone.
+
+---
+
+# 8. Adverse-Reaction Frequency
+
+| Adverse Reaction | Reports | Percentage |
+|---|---:|---:|
+| Skin Rash | 1 | 12.5% |
+| Severe Muscle Pain | 1 | 12.5% |
+| Tendonitis | 1 | 12.5% |
+| Gastric Ulcer | 1 | 12.5% |
+| Persistent Cough | 1 | 12.5% |
+| Nausea & Vomiting | 1 | 12.5% |
+| Uncontrolled Bleeding | 1 | 12.5% |
+| Peripheral Neuropathy | 1 | 12.5% |
+| **Total** | **8** | **100%** |
+
+### Interpretation
+
+Each adverse reaction occurs once.
+
+Therefore, no individual adverse reaction demonstrates repeated reporting frequency within this small dataset.
+
+---
+
+# 9. Severity Distribution
+
+The reported severity categories were summarized as follows:
+
+| Severity | Reports | Percentage |
+|---|---:|---:|
+| Mild | 3 | 37.5% |
+| Moderate | 2 | 25.0% |
+| Severe | 2 | 25.0% |
+| Life-Threatening | 1 | 12.5% |
+| **Total** | **8** | **100%** |
+
+### Key observation
+
+Three of the eight reports were classified as either:
+
+- Severe
+- Life-Threatening
+
+This represents:
+
+**3 / 8 = 37.5%**
+
+Therefore:
+
+**37.5% of reports were severe or life-threatening according to the severity field.**
+
+---
+
+# 10. Important Distinction: Severity vs Seriousness
+
+Severity and seriousness are not interchangeable pharmacovigilance concepts.
+
+The supplied dataset contains a **Severity** field but does not contain a dedicated **Seriousness** field.
+
+Therefore, a formal regulatory seriousness classification has **not** been assigned in this analysis.
+
+Instead, the following descriptive measures are reported:
+
+### Severe or life-threatening reports
+
+**3 of 8 reports = 37.5%**
+
+### Hospitalized outcomes
+
+**3 of 8 reports = 37.5%**
+
+These values should be interpreted as descriptive characteristics of the supplied dataset and not as a formal regulatory seriousness rate.
+
+---
+
+# 11. Hospitalization Analysis
+
+| Outcome | Reports | Percentage |
+|---|---:|---:|
+| Recovered | 3 | 37.5% |
+| Recovering | 1 | 12.5% |
+| Hospitalized | 3 | 37.5% |
+| Not Recovered | 1 | 12.5% |
+| **Total** | **8** | **100%** |
+
+### Hospitalized cases
+
+The following reports have a hospitalized outcome:
+
+- ADR-9003 — Ciprofloxacin — Tendonitis
+- ADR-9004 — Ibuprofen — Gastric Ulcer
+- ADR-9007 — Warfarin — Uncontrolled Bleeding
+
+Therefore:
+
+**Hospitalized reports = 3 / 8 = 37.5%**
+
+---
+
+# 12. Reporter-Type Analysis
+
+| Reporter Type | Reports | Percentage |
+|---|---:|---:|
+| Physician | 3 | 37.5% |
+| Pharmacist | 2 | 25.0% |
+| Patient | 2 | 25.0% |
+| Oncologist | 1 | 12.5% |
+| **Total** | **8** | **100%** |
+
+### Interpretation
+
+Physicians submitted the largest number of reports in this dataset.
+
+However, all reporter categories represented in the dataset should be considered when interpreting spontaneous or aggregated safety data.
+
+---
+
+# 13. Drug–Event Combination Analysis
+
+A drug–event combination was defined as:
+
+`Suspected Drug + Adverse Reaction`
+
+The supplied dataset contains the following combinations:
+
+| Suspected Drug | Adverse Reaction | Frequency |
+|---|---|---:|
+| Amoxicillin | Skin Rash | 1 |
+| Atorvastatin | Severe Muscle Pain | 1 |
+| Ciprofloxacin | Tendonitis | 1 |
+| Ibuprofen | Gastric Ulcer | 1 |
+| Lisinopril | Persistent Cough | 1 |
+| Metformin | Nausea & Vomiting | 1 |
+| Warfarin | Uncontrolled Bleeding | 1 |
+| Paclitaxel | Peripheral Neuropathy | 1 |
+
+### Finding
+
+No drug–event combination occurs more than once.
+
+Therefore:
+
+**There is no high-frequency drug–event combination in this eight-report dataset.**
+
+The dataset is therefore more useful for demonstrating the signal-exploration workflow than for establishing a repeated reporting pattern.
+
+---
+
+# 14. High-Priority Cases for Expert Review
+
+Although frequency alone does not reveal a repeated signal in this dataset, several reports have characteristics that justify closer expert review.
+
+## ADR-9007
+
+**Suspected drug:** Warfarin  
+**Adverse reaction:** Uncontrolled Bleeding  
+**Severity:** Life-Threatening  
+**Outcome:** Hospitalized  
+**Reporter:** Physician
+
+### Why it warrants review
+
+This report has the highest severity category in the dataset and resulted in hospitalization.
+
+It should therefore receive attention during safety review.
+
+---
+
+## ADR-9003
+
+**Suspected drug:** Ciprofloxacin  
+**Adverse reaction:** Tendonitis  
+**Severity:** Severe  
+**Outcome:** Hospitalized  
+**Reporter:** Physician
+
+### Why it warrants review
+
+The report is classified as severe and resulted in hospitalization.
+
+It represents another high-priority case for clinical/pharmacovigilance review.
+
+---
+
+## ADR-9004
+
+**Suspected drug:** Ibuprofen  
+**Adverse reaction:** Gastric Ulcer  
+**Severity:** Severe  
+**Outcome:** Hospitalized  
+**Reporter:** Patient
+
+### Why it warrants review
+
+This report has severe severity and a hospitalized outcome.
+
+It should therefore be included in further case-level review.
+
+---
+
+# 15. Potential Signal Review Table
+
+| Report | Drug | Event | Severity | Outcome | Review Priority Reason |
+|---|---|---|---|---|---|
+| ADR-9007 | Warfarin | Uncontrolled Bleeding | Life-Threatening | Hospitalized | Highest reported severity + hospitalization |
+| ADR-9003 | Ciprofloxacin | Tendonitis | Severe | Hospitalized | Severe event + hospitalization |
+| ADR-9004 | Ibuprofen | Gastric Ulcer | Severe | Hospitalized | Severe event + hospitalization |
+
+> These are **review-priority observations**, not conclusions that the suspected drugs caused the reported events.
+
+---
+
+# 16. Adverse-Reaction Onset
+
+The dataset provides an onset value for each report.
+
+| Report | Drug | Adverse Reaction | Onset |
+|---|---|---|---:|
+| ADR-9001 | Amoxicillin | Skin Rash | 2 |
+| ADR-9002 | Atorvastatin | Severe Muscle Pain | 14 |
+| ADR-9003 | Ciprofloxacin | Tendonitis | 7 |
+| ADR-9004 | Ibuprofen | Gastric Ulcer | 5 |
+| ADR-9005 | Lisinopril | Persistent Cough | 21 |
+| ADR-9006 | Metformin | Nausea & Vomiting | 1 |
+| ADR-9007 | Warfarin | Uncontrolled Bleeding | 10 |
+| ADR-9008 | Paclitaxel | Peripheral Neuropathy | 30 |
+
+### Descriptive observation
+
+The reported onset values range from:
+
+**1 to 30**
+
+The earliest reported onset is associated with Metformin and Nausea & Vomiting.
+
+The longest reported onset is associated with Paclitaxel and Peripheral Neuropathy.
+
+The onset values are descriptive and should not be interpreted as evidence of causality.
+
+---
+
+# 17. Suggested Visualizations
+
+The assignment requires visualization of high-frequency drug–event combinations.
+
+Because every drug–event combination occurs only once, a frequency chart will show equal frequency across all combinations.
+
+## Recommended Chart 1: Drug–Event Frequency
+
+### X-axis
+
+Drug–event combination
+
+### Y-axis
+
+Number of reports
+
+### Expected result
+
+All eight combinations have:
+
+**Frequency = 1**
+
+This demonstrates that there is no repeated drug–event combination in the supplied dataset.
+
+---
+
+## Recommended Chart 2: Severity Distribution
+
+A bar chart should display:
+
+- Mild = 3
+- Moderate = 2
+- Severe = 2
+- Life-Threatening = 1
+
+---
+
+## Recommended Chart 3: Outcome Distribution
+
+A bar chart should display:
+
+- Recovered = 3
+- Recovering = 1
+- Hospitalized = 3
+- Not Recovered = 1
+
+---
+
+## Recommended Chart 4: Suspected Drug Frequency
+
+A bar chart showing all eight suspected drugs.
+
+Each drug has:
+
+**1 report**
+
+---
+
+# 18. Dashboard / Visualization Layout
+
+A simple dashboard can be structured as follows:
+
+```text
+---------------------------------------------------------
+             ADVERSE EVENT SIGNAL EXPLORATION
+---------------------------------------------------------
+
+ Total Reports     Severe/Life-Threatening    Hospitalized
+      8                    3                      3
+
+---------------------------------------------------------
+
+ Severity Distribution       Outcome Distribution
+
+ Mild: 3                     Recovered: 3
+ Moderate: 2                 Recovering: 1
+ Severe: 2                   Hospitalized: 3
+ Life-Threatening: 1         Not Recovered: 1
+
+---------------------------------------------------------
+
+        DRUG–EVENT COMBINATION FREQUENCY
+
+ Amoxicillin – Skin Rash                  1
+ Atorvastatin – Severe Muscle Pain        1
+ Ciprofloxacin – Tendonitis               1
+ Ibuprofen – Gastric Ulcer                1
+ Lisinopril – Persistent Cough            1
+ Metformin – Nausea & Vomiting            1
+ Warfarin – Uncontrolled Bleeding         1
+ Paclitaxel – Peripheral Neuropathy       1
+
+---------------------------------------------------------
+
+             PRIORITY REVIEW CASES
+
+ ADR-9007 – Warfarin – Uncontrolled Bleeding
+ ADR-9003 – Ciprofloxacin – Tendonitis
+ ADR-9004 – Ibuprofen – Gastric Ulcer
+
+---------------------------------------------------------
+19. Key Findings
+Finding 1 — No repeated drug–event combination
+
+All eight drug–event combinations occur once.
+
+Therefore, the supplied dataset does not demonstrate a repeated high-frequency combination.
+Finding 2 — 37.5% of reports are severe or life-threatening
+
+Three reports are categorized as Severe or Life-Threatening.
+
+This represents:
+
+37.5% of all reports.
+
+Finding 3 — 37.5% of reports resulted in hospitalization
+
+Three reports have a Hospitalized outcome.
+
+This represents:
+
+37.5% of all reports.
+Finding 4 — One report is life-threatening
+
+ADR-9007 involving Warfarin and Uncontrolled Bleeding is the only report classified as Life-Threatening.
+
+Its outcome is Hospitalized.
+
+Finding 5 — Middle adults form the largest age group
+
+Four of the eight reports involve patients aged 45–64 years.
+
+This represents:
+
+50% of the dataset.
+Finding 6 — Physician reports are the most common reporter type
+
+Physicians contributed 3 of the 8 reports.
+
+This represents:
+
+37.5% of the dataset.
+
+20. Pharmacovigilance Interpretation
+
+The analysis identifies several reports that may warrant expert review based on severity and outcome.
+
+However, this dataset does not support a conclusion of causality or disproportionality.
+Important limitations include:
+
+Only 8 reports are available.
+Each suspected drug appears once.
+Each drug–event combination appears once.
+No denominator data are available.
+There is no exposure data.
+There is no comparator group.
+There is no background incidence rate.
+There is no reporting-database disproportionality analysis.
+The dataset does not contain a dedicated seriousness field.
+The data are synthetic/de-identified for analytical practice.
+
+Therefore, the findings should be interpreted as descriptive signal exploration only.
+21. Signal-Detection Limitations
+
+A higher reporting frequency does not automatically establish a safety signal.
+
+Proper signal assessment may require additional information such as:
+
+Number of exposed patients
+Reporting rate
+Background incidence
+Time trends
+Concomitant medications
+Patient medical history
+Alternative causes
+Dechallenge/rechallenge information
+Dose and duration
+Population characteristics
+Literature and clinical evidence
+Larger safety databases
+
+The present project does not perform a formal causal assessment.
+
+22. Data Quality Considerations
+
+The source dataset is a small synthetic aggregate dataset.
+
+Before using a similar dataset for real-world pharmacovigilance analysis, the following quality checks should be performed:
+Missing values
+Duplicate reports
+Duplicate cases
+Inconsistent drug names
+Inconsistent reaction terminology
+Invalid ages
+Invalid severity categories
+Invalid outcome categories
+Date consistency
+Reporter-type consistency
+Coding-standard consistency
+
+For real-world pharmacovigilance work, standardized terminology and validated data-processing procedures would also be required.
+23. Reproducible Analysis Summary
+Total reports
+
+8
+
+Unique suspected drugs
+
+8
+
+Unique adverse reactions
+
+8
+
+Repeated drug–event combinations
+
+0
+
+Severe reports
+
+2
+Life-threatening reports
+
+1
+
+Severe or life-threatening reports
+
+3
+
+Severe/life-threatening proportion
+
+3 / 8 × 100 = 37.5%
+
+Hospitalized reports
+
+3
+
+Hospitalized proportion
+
+3 / 8 × 100 = 37.5%
+
+Recovered reports
+
+3
+Recovering reports
+
+1
+
+Not recovered reports
+
+1
+
+24. Final Conclusion
+
+This adverse-event signal exploration analyzed eight de-identified reports to identify reporting patterns and potential cases requiring expert review.
+
+The dataset contains eight different suspected drugs and eight different drug–event combinations, with each combination occurring once. Therefore, no repeated high-frequency drug–event combination was
+identified.
+
+Three reports were categorized as Severe or Life-Threatening, representing 37.5% of the dataset. Three reports had a Hospitalized outcome, also representing 37.5%.
+
+The Warfarin–Uncontrolled Bleeding report was the only Life-Threatening case and had a Hospitalized outcome. Ciprofloxacin–Tendonitis and Ibuprofen–Gastric Ulcer were classified as Severe and also had Hospitalized outcomes.
+These cases can be prioritized for further expert review based on their reported severity and outcomes.
+
+However, the analysis does not establish causality and does not constitute a formal pharmacovigilance signal confirmation. The small dataset, absence of exposure denominators, absence of comparator data, and lack of repeated drug–event combinations substantially limit interpretation.
+
+The project therefore demonstrates a descriptive, non-causal adverse-event signal exploration workflow rather than a definitive safety assessment.
